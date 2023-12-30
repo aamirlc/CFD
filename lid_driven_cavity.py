@@ -3,12 +3,12 @@ from matplotlib import pyplot as plt
 
 n = 100 # discretizations 
 box_size = 2.0 # domain size
-n_iter = 500
+n_iter = 500 # this and the dt term need to be studied more to ensure stability
 dt = 0.0001
 
 nu = 0.1 # kinematic viscosity
 rho = 1.0 # density
-u = 1.0 # lid velocity (horizontal)
+u = 3.0 # lid velocity (horizontal)
 
 p_poisson_iter = n_iter / 20
 
@@ -23,6 +23,8 @@ def main():
     v0 = np.zeros_like(X)
     p0 = np.zeros_like(X)
 
+    # using the central difference scheme for partial derivatives
+
     def central_diff_x(field):
         diff = np.zeros_like(field)
         diff[1:-1, 1:-1] = (field[1:-1, 2: ] - field[1:-1, 0:-2]) / (2 * h)
@@ -34,6 +36,8 @@ def main():
         diff[1:-1, 1:-1] = (field[2: , 1:-1] - field[0:-2, 1:-1]) / (2 * h)
 
         return diff
+    
+    # using the 5 point stencil for laplacian (check Wikipedia) 
     
     def laplacian(f):
         diff = np.zeros_like(f)
@@ -80,7 +84,7 @@ def main():
 
         # divergence (Nabla operator)
 
-        # solving the pressure-Poisson equation
+        # solving the pressure-Poisson equation (check wikipedia for basics)
 
         rhs = (
             rho / dt
@@ -129,8 +133,7 @@ def main():
     plt.contourf(X, Y, p_new, cmap=plt.cm.bone)
     plt.colorbar()
 
-    plt.quiver(X[::2, ::2], Y[::2, ::2], u_new[::2, ::2], v_new[::2, ::2], color="black")
-    #plt.streamplot(X[::2, ::2], Y[::2, ::2], u_new[::2, ::2], v_new[::2, ::2], color="black")
+    plt.streamplot(X, Y, u_new, v_new, color="black")
     plt.show()
 
 if __name__ == "__main__":
