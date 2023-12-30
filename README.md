@@ -1,2 +1,2 @@
 # CFD
-Implementing Computational Fluid Dynamics in Python and Julia.
+Solving the problems like the lid driven cavity problem in Python and Julia.
