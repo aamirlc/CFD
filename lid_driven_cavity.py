@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-n = 100 # discretizations 
+n = 100 # grid points
 box_size = 2.0 # domain size
 n_iter = 500 # this and the dt term need to be studied more to ensure stability
 dt = 0.0001
