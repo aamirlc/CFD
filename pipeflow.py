@@ -5,20 +5,20 @@ import matplotlib.pyplot as plt
 
 # trying to solve the Hagen-Poiseulle 
 
-i = 11 # grid points in each direction
+i = 21 # grid points in each direction
 n = 100
 
-dt = 0.2
+dt = 0.5
 
 nu = 0.01
 
-del_P_rho = np.array([-1, 0]) # constant pressure gradient 
+del_P_rho = np.array([-0.5, 0]) # constant pressure gradient 
 
 def main():
     
-    h = 1 / (i - 1)
+    h = 3 / (i - 1)
 
-    x = np.linspace(0, 1, i)
+    x = np.linspace(0, 3, i)
     y = np.linspace(0, 1, i) 
 
     X, Y = np.meshgrid(x, y)
@@ -55,7 +55,7 @@ def main():
 
         u0 = un
 
-        plt.contourf(X, Y, un, levels=20)
+        plt.contourf(X, Y, un, levels=20, cmap=plt.cm.bone)
         plt.colorbar()
 
         plt.quiver(X, Y, un, np.zeros_like(un))
@@ -66,6 +66,8 @@ def main():
         plt.draw()
         plt.pause(0.1)
         plt.clf()
+
+    plt.show()
 
 if __name__ == "__main__":
     main()
